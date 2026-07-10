@@ -9,9 +9,7 @@
 #define M_PI_F 3.14159265358979323846f
 const float DEG_TO_RAD = M_PI_F / 180.f;
 const float RAD_TO_DEG = 180.0f / M_PI_F;
-// -----------------------------------------------------------------------------------------------------------
 const float OCCUPANCY_THRESHOLD = 50.0; // user set costmap occupancy params (temporary testing setup for now)
-// -----------------------------------------------------------------------------------------------------------
 
 struct PolarPoint{
   PolarPoint(float z_, float r_) : z(z_), r(r_){};
@@ -39,9 +37,9 @@ int polarToHistogramIndex(PolarPoint& polar_point, int res){
     if(z_ind < 0){z_ind = 0;}
     return z_ind;
 }
+
 // converting units/sub-frame from costmap-matrix to world units [m]
 Eigen::Vector2f costmapMatrixToCartesianMap(int mx, int my, const float map_res, const int map_height, const int map_width){
-    std::pair<float, float> cartesian_coords(0.0f, 0.0f);
     // aligning map matrix (0,0) index to the map's bottom left along ENU-convention
     float x = (mx-(map_height/2.0f))*map_res;
     float y = (my-(map_width/2.0f))*map_res;
@@ -50,6 +48,7 @@ Eigen::Vector2f costmapMatrixToCartesianMap(int mx, int my, const float map_res,
     p.y() = y;
     return p;
 }
+
 // converting cartesian coords to polar coords
 PolarPoint cartesianToPolarPoint(const Eigen::Vector2f& p){
     // p contains 2d vector{x,y} pos values of cells in cartesian convention which is wrt the VCP/bot centre

@@ -18,10 +18,12 @@ find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(Eigen3 REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 # -------------- add libs & headers here --------------
 set(VFH_PLANNER_CPP_FILES
   "src/histogram.cpp"
+  "src/local_planner.cpp"
 )
 
 include_directories(
@@ -30,7 +32,11 @@ include_directories(
 add_library(${PROJECT_NAME}_libs SHARED
   ${VFH_PLANNER_CPP_FILES}
 )
-target_link_libraries(${PROJECT_NAME}_libs PRIVATE
+ament_target_dependencies(${PROJECT_NAME}_libs
+  nav2_costmap_2d
+
+)
+target_link_libraries(${PROJECT_NAME}_libs
   Eigen3::Eigen
 )
 # -------------------------------------------
@@ -45,6 +51,7 @@ ament_target_dependencies(local_costmap_viewer_node
   lifecycle_msgs
   nav_msgs
   sensor_msgs
+  geometry_msgs
   nav2_core
   nav2_util
   nav2_costmap_2d
