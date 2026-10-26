@@ -1,3 +1,4 @@
+#! /usr/bin/python3
 import re
 import matplotlib.pyplot as plt
 import numpy as np

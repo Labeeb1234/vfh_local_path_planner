@@ -29,47 +29,62 @@ set(VFH_PLANNER_CPP_FILES
 include_directories(
   include
 )
-add_library(${PROJECT_NAME}_libs SHARED
-  ${VFH_PLANNER_CPP_FILES}
-)
-ament_target_dependencies(${PROJECT_NAME}_libs
-  nav2_costmap_2d
+# add_library(${PROJECT_NAME}_libs SHARED
+#   ${VFH_PLANNER_CPP_FILES}
+# )
+# ament_target_dependencies(${PROJECT_NAME}_libs
+#   nav2_costmap_2d
 
-)
-target_link_libraries(${PROJECT_NAME}_libs
-  Eigen3::Eigen
-)
+# )
+# target_link_libraries(${PROJECT_NAME}_libs
+#   Eigen3::Eigen
+# )
 # -------------------------------------------
 
-add_executable(local_costmap_viewer_node src/local_costmap_viewer.cpp)
-target_link_libraries(local_costmap_viewer_node
-  ${PROJECT_NAME}_libs
-) # --> no use in ROS distros below Kilted
-ament_target_dependencies(local_costmap_viewer_node
+add_executable(test_local_costmap_node src/test_lifecycle_node.cpp)
+ament_target_dependencies(test_local_costmap_node
   rclcpp
   rclcpp_lifecycle
-  lifecycle_msgs
-  nav_msgs
-  sensor_msgs
-  geometry_msgs
-  nav2_core
-  nav2_util
   nav2_costmap_2d
-  tf2_ros
-  tf2
+  lifecycle_msgs
+  sensor_msgs
 )
 install(
   TARGETS
-    ${PROJECT_NAME}_libs
-    local_costmap_viewer_node
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
+    test_local_costmap_node
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
-install(
-  DIRECTORY include/
-  DESTINATION include/
-)
+
+
+# add_executable(local_costmap_viewer_node src/local_costmap_viewer.cpp)
+# target_link_libraries(local_costmap_viewer_node
+#   ${PROJECT_NAME}_libs
+# ) # --> no use in ROS distros below Kilted
+# ament_target_dependencies(local_costmap_viewer_node
+#   rclcpp
+#   rclcpp_lifecycle
+#   lifecycle_msgs
+#   nav_msgs
+#   sensor_msgs
+#   geometry_msgs
+#   nav2_core
+#   nav2_util
+#   nav2_costmap_2d
+#   tf2_ros
+#   tf2
+# )
+# install(
+#   TARGETS
+#     ${PROJECT_NAME}_libs
+#     local_costmap_viewer_node
+#   ARCHIVE DESTINATION lib
+#   LIBRARY DESTINATION lib
+#   RUNTIME DESTINATION lib/${PROJECT_NAME}
+# )
+# install(
+#   DIRECTORY include/
+#   DESTINATION include/
+# )
 
 
 if(BUILD_TESTING)

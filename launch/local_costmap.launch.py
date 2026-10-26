@@ -36,7 +36,8 @@ def generate_launch_description():
         source_file=nav_params_file,
         root_key="",
         param_rewrites=param_substitutions,
-        convert_types=True)
+        convert_types=True
+    )
 
 
     # rviz node
@@ -52,34 +53,20 @@ def generate_launch_description():
     )
 
     # managed lifecycle node names required
-    lifecycle_nodes = ["local_costmap"]
+    # lifecycle_nodes = ["local_costmap"]
     # local costmap managed node 
     costmap_node = Node(
         package="vfh_algo_plan",
-        executable="local_costmap_viewer_node",
-        name="local_costmap",
-        parameters=[configured_params]
+        executable="test_local_costmap_node",
+        name="test_local_costmap",
+        parameters=[configured_params, {"use_sim_time": LaunchConfiguration("use_sim_time")}]
     )
-    # lifecycle manager node (unused for now) --> make a custom one tbh
-    lifecycle_manager_node = Node(
-        package='nav2_lifecycle_manager',
-        executable='lifecycle_manager',
-        name='lifecycle_manager_navigation',
-        parameters=[{
-            'use_sim_time': LaunchConfiguration("use_sim_time"),
-            'autostart': LaunchConfiguration("autostart"),
-            'node_names': lifecycle_nodes
-        }]
-    )
+
 
     ld = LaunchDescription()
     ld.add_action(declare_use_sim_time_cmd)
     ld.add_action(declare_autostart_cmd)
     ld.add_action(rviz_node)
     ld.add_action(costmap_node)
-
-    # ld.add_action(lifecycle_manager_node)
-
-
 
     return ld

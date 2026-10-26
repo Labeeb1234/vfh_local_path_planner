@@ -155,7 +155,7 @@ public:
         // declare parameters for costmap node (if any)
         costmap2d_ros_ = std::make_shared<nav2_costmap_2d::Costmap2DROS>(
             "local_costmap",
-            std::string{get_namespace()},
+            std::string{this->get_namespace()},
             "local_costmap"
         );
     }

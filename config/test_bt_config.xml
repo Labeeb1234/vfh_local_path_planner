@@ -1,0 +1,8 @@
+<!-- costmap clearing behaviour -->
+<root BTCPP_format="4">
+    <BehaviorTree ID="MainTree">
+        <Sequence name="test_control_node">
+            <clear costmap action node> // using clearing costmap service call
+        </Sequence>
+    </BehaviorTree>
+</root>
