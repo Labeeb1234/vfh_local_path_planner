@@ -55,6 +55,19 @@ install(
   RUNTIME DESTINATION lib/${PROJECT_NAME}
 )
 
+add_executable(test_ccv_grid_node src/test_cell_certainty_grid.cpp)
+ament_target_dependencies(test_ccv_grid_node
+  rclcpp
+  rclcpp_lifecycle
+  nav2_costmap_2d
+  lifecycle_msgs
+)
+install(
+  TARGETS
+    test_ccv_grid_node
+  RUNTIME DESTINATION lib/${PROJECT_NAME}
+)
+
 
 # add_executable(local_costmap_viewer_node src/local_costmap_viewer.cpp)
 # target_link_libraries(local_costmap_viewer_node
@@ -99,7 +112,12 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-
+# install python scripts/programs
+install(
+  PROGRAMS
+    scripts/data_vis.py
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 install(
   DIRECTORY

@@ -120,6 +120,7 @@ public:
 
 
         // initialize publisher here
+        costmap_img_grp_ = this->create_callback_group(rclcpp::CallbackGroupType::Reentrant); // define callback group
         costmap_img_pub_ = this->create_publisher<sensor_msgs::msg::Image>("/local_costmap/image/viz", rclcpp::SystemDefaultsQoS());
 
         return CallbackReturn::SUCCESS;
@@ -141,14 +142,13 @@ public:
 
         // after activating visualise the costmap as an image data for understanding data handling (this is a temp setup btw)
         // initialize timer for the costmap image updates
+        // structure required is run timer func in a parallel thread and access main thread will run the lifecycles main stuff running costmap->activate() stuff
+        // the custom thread will run the timer func doing the publishing of the image topic and custom rates
         costmap_img_timer_ = this->create_wall_timer(
             std::chrono::milliseconds(timer_period), 
             std::bind(&TestLocalCostmapNode::timer1Callback, this), 
             costmap_img_grp_
         );
-
-        // structure required is run timer func in a parallel thread and access main thread will run the lifecycles main stuff running costmap->activate() stuff
-        // the custom thread will run the timer func doing the publishing of the image topic and custom rates
 
                 
         return CallbackReturn::SUCCESS;

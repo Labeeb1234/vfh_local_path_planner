@@ -57,7 +57,7 @@ def generate_launch_description():
     # local costmap managed node 
     costmap_node = Node(
         package="vfh_algo_plan",
-        executable="test_local_costmap_node",
+        executable="test_ccv_grid_node",
         name="test_local_costmap",
         parameters=[configured_params, {"use_sim_time": LaunchConfiguration("use_sim_time")}]
     )
